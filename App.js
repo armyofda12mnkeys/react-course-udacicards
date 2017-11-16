@@ -1,14 +1,84 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { TabNavigator, StackNavigator } from 'react-navigation';
+import DeckList from './components/DeckList';
+import AddDeck from './components/AddDeck';
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { Constants } from 'expo';
+import rootReducer from './reducers/reducers';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider, connect } from 'react-redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+//assume i dont need <ConnectedRouter and routerMiddleware and createHistory
+
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer,
+  composeEnhancers(
+    applyMiddleware(thunk, logger)
+  )
+);
+
+
+
+function UdaciStatusBar({backgroundColor, ...props}) {
+  return (
+    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  );
+}
+
+const Tabs = TabNavigator({
+  DeckList: {
+    screen: DeckList,
+    navigationOptions: {
+      tabBarLabel: 'DeckList',
+      tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
+    }
+  },
+  AddDeck: {
+    screen: AddDeck,
+    navigationOptions: {
+      tabBarLabel: 'Add Entry',
+      tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+    }
+  }
+});
+
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null
+      //title: 'Home',
+    }
+  },
+  /*
+  DeckInfo: { 
+    screen: Tabs,
+  },
+  AddCardsToDeck: {    
+    screen: Tabs,
+  },
+  Quiz: {
+    screen: Tabs,
+  }
+  */
+});
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <UdaciStatusBar backgroundColor={'purple'} barStyle='light-content' />
+          <MainNavigator style={{margin:0, padding: 0}} />
+        </View>
+      </Provider>
     );
   }
 }
@@ -16,8 +86,19 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'red',
+    //alignItems: 'center',
+    //justifyContent: 'center',
   },
 });
+
+//export default connect()(App);
+
+
+/*
+<Text>Shake your phone to open the developer menu.</Text>
+*/
+
+
+
+
