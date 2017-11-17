@@ -3,8 +3,14 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
+import DeckInfo from './components/DeckInfo';
+import AddCardToDeck from './components/AddCardToDeck';
+import Quiz from './components/Quiz';
+import EmptyTest from './components/test/EmptyTest';
+
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo';
+
 import rootReducer from './reducers/reducers';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
@@ -56,17 +62,34 @@ const MainNavigator = StackNavigator({
       //title: 'Home',
     }
   },
-  /*
   DeckInfo: { 
-    screen: Tabs,
+    screen: DeckInfo,
+    navigationOptions: {
+      header: null
+      //title: 'Home',
+    }
   },
-  AddCardsToDeck: {    
-    screen: Tabs,
+  AddCardToDeck: {    
+    screen: AddCardToDeck,
+    navigationOptions: {
+      header: null
+      //title: 'Home',
+    }
   },
   Quiz: {
-    screen: Tabs,
-  }
-  */
+    screen: Quiz,
+    navigationOptions: {
+      header: null
+      //title: 'Home',
+    }
+  },
+  EmptyTest: {
+    screen: EmptyTest,
+    navigationOptions: {
+      //header: null
+      title: 'TEST',
+    }
+  },
 });
 
 
