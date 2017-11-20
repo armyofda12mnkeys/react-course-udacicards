@@ -11,11 +11,14 @@ function decks(state={}, action) {
       }
     }
     case ADD_DECK: {
+      console.log("adding deck action:", action.deck);
+      //let {deck} = action.deck;
       return {
         ...state,
         ...action.deck
       }
     }
+    /*
     case REMOVE_DECK: {
       return {
         ...state,
@@ -28,6 +31,7 @@ function decks(state={}, action) {
         ...action.deck
       }
     }
+    */
     default:
       return state;
    

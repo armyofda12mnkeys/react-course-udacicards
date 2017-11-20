@@ -18,13 +18,24 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 //assume i dont need <ConnectedRouter and routerMiddleware and createHistory
 
+import Reactotron from 'reactotron-react-native'
+import './ReactotronConfig';//hmmm can't connect try later
+//"reactotron-react-native": "^1.12.3"
+Reactotron.log('something really interesting happened!!!')
 
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = compose;
+/*
 const store = createStore(rootReducer,
-  composeEnhancers(
-    applyMiddleware(thunk, logger)
-  )
+  //composeEnhancers(
+    applyMiddleware(thunk) //, logger
+  //)
+);
+*/
+const store = Reactotron.createStore(rootReducer,
+  //composeEnhancers(
+    applyMiddleware(thunk) //, logger
+  //)
 );
 
 
@@ -48,7 +59,7 @@ const Tabs = TabNavigator({
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: 'Add Entry',
+      tabBarLabel: 'Add Deck',
       tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor} />
     }
   }

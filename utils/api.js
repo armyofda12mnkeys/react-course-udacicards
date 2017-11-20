@@ -1,23 +1,40 @@
 import { AsyncStorage } from 'react-native';
-import { CALENDAR_STORAGE_KEY, testFunc } from './_helpers';
+import { STORAGE_KEY, testFunc } from './_helpers';
 
 export function fetchDecksFromAsyncStorage() {
-  return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
+  //AsyncStorage.removeItem('UdaciFitness:calendar');
+  //AsyncStorage.clear();
+  
+  return AsyncStorage.getItem(STORAGE_KEY)
   .then((results) => JSON.parse(results))
 }
+/*
+export function formatCalendarResults (results) {
+  return results === null
+    ? setDummyData()
+    : setMissingDates(JSON.parse(results))
+}
+*/
 
-export function submitEntryToAsyncStorage({entry, key}) {
-  return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-    [key] : entry
+
+export function submitNewDeckToAsyncStorage({value, key}) {
+  //try setItem instead of mergeItem
+  return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({
+    [key] : { title: value, questions: [] }
   }))
 }
 
-export function removeEntryFromAsyncStorage(key) {
-  return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
+export function removeDeckFromAsyncStorage(key) {
+  return AsyncStorage.getItem(STORAGE_KEY)
     .then((results) => {
       const data = JSON.parse(results)
       data[key] = undefined
       delete data[key]
-      AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
     })
+}
+
+
+export function addCardToDeck({card, deck}) {
+  
 }

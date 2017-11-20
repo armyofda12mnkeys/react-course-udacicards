@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { submitEntryToAsyncStorage } from '../utils/api';
+import { submitNewDeckToAsyncStorage } from '../utils/api';
 import {connect} from 'react-redux';
 import { addDeck } from '../actions/actions';
 
@@ -16,7 +16,7 @@ class AddDeck extends React.Component {
     const key = this.state.text.replace(" ", "_");
     const value = this.state.text;
     
-    submitEntryToAsyncStorage({ value, key });
+    submitNewDeckToAsyncStorage({ value, key });
     
     //save to redux (or do redux-persist)
     this.props.dispatch(addDeck({
@@ -41,6 +41,7 @@ class AddDeck extends React.Component {
           value={this.state.text}
           underlineColorAndroid='transparent'
           placeholder='Deck Title'
+          maxLength={30}
         />
         <Text>You are about to add a deck called: {this.state.text}</Text>
         <TouchableOpacity onPress={this.submit} style={styles.submitBtn}>
