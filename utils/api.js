@@ -4,7 +4,7 @@ import { STORAGE_KEY, testFunc } from './_helpers';
 export function fetchDecksFromAsyncStorage() {
   //AsyncStorage.removeItem('UdaciFitness:calendar');
   //AsyncStorage.clear();
-  
+
   return AsyncStorage.getItem(STORAGE_KEY)
   .then((results) => JSON.parse(results))
 }
@@ -36,5 +36,5 @@ export function removeDeckFromAsyncStorage(key) {
 
 
 export function addCardToDeck({card, deck}) {
-  
+
 }

@@ -10,32 +10,32 @@ class AddDeck extends React.Component {
     super(props);
     this.state = { text: '' };
   }
-  
+
   submit = () => {
     //save to AsyncStorage
     const key = this.state.text.replace(" ", "_");
     const value = this.state.text;
-    
+
     submitNewDeckToAsyncStorage({ value, key });
-    
+
     //save to redux (or do redux-persist)
     this.props.dispatch(addDeck({
-      [key]: value
+      [key]: {title: value, questions: []}
     }));
-    
+
     //update local state
     this.setState({ text: '' });
-    
+
     this.props.navigation.dispatch(NavigationActions.back({
       key: 'AddDeck' //not sure what this optional param does, pop off stack?
     }));
   }
-  
+
   render() {
     return (
       <View>
         <Text style={{fontWeight: 'bold', fontSize: 30, textAlign: 'center'}}>What is the title of your new deck?</Text>
-        <TextInput 
+        <TextInput
           style={{borderColor: 'gray', borderWidth: 1, margin: 10, padding: 5,}}
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}

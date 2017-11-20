@@ -4,11 +4,12 @@ function decks(state={}, action) {
   switch(action.type) {
     case RECEIVE_DECKS: {
       //if( action.decks )
-      
-      return {
+      let x = {
         ...state,
         ...action.decks
-      }
+      };
+      console.log('x', x);
+      return x;
     }
     case ADD_DECK: {
       console.log("adding deck action:", action.deck);
@@ -34,7 +35,7 @@ function decks(state={}, action) {
     */
     default:
       return state;
-   
+
   }
 }
 
