@@ -1,3 +1,11 @@
 #for Reactotron:
 adb reverse tcp:9090 tcp:9090
 adb reverse --list
+
+#in case Control+M (aka the Shake on real device) isnt bringing up menu on device
+adb shell input keyevent 82
+
+#sometimes Control+M still not working, try clicking on Expo in the Nav Drawer and 'clearing data'... as i noticed this when trying to run on device that somehow its switched to production mode and therefore not making dev menu popup (so couldn't debug).
+
+#expo and reactnative versions need to be in sync in package.json/app.json:
+https://github.com/react-community/create-react-native-app/blob/master/VERSIONS.md

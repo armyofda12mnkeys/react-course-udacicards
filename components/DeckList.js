@@ -64,7 +64,11 @@ class DeckList extends React.Component {
         <Text>DeckList</Text>
         <Text>ready: x{this.state.ready == false ? 'false' : 'true'}x</Text>
         <Text>x{this.props.test}x</Text>
-        <Text>y{this.props.deckxxx.length}y</Text>
+        <Text>y{this.props.decks.length}y</Text>
+        <FlatList
+          data={decks}
+          renderItem={({item}) => <DeckItem db_key={item.db_key} title={item.title} numCards={item.questions.length} />}
+        />
       </View>
     );
   }
@@ -79,10 +83,22 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps (state) {
-  console.log('decks', state.decks);
+  let decks = state.decks;
+  console.log('decks', decks);
+  
+  let decks_new = [];
+  for(let key in decks) {
+    let value = decks[key];
+    let title = value.title;
+    let questions = value.questions;
+    decks_new.push ({key: key, db_key: key, title: title, questions: questions});
+  }
+  console.log('decks_new', decks_new);
+//  console.log('decks_new', decks_new[0].questions);
+  
   return {
     test: "test1234",
-    deckxxx: [ {deck_1: {title: 'deck 111', questions: []}} ] //state.decks
+    decks: decks_new //[ {deck_1: {title: 'deck 111', questions: []}} ] //
   }
 }
 
