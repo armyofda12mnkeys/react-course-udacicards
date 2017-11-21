@@ -26,13 +26,18 @@ function decks(state={}, action) {
         ...action.deck
       }
     }
+    */
     case ADD_CARD_TO_DECK: {
+      const db_key        = action.db_key;
+      const question_card = action.card;
+      
+      
       return {
         ...state,
         ...action.deck
       }
     }
-    */
+    
     default:
       return state;
 

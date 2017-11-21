@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { connect } from 'react-redux';
 
 //export default 
 class AddCardToDeck extends React.Component {
@@ -16,7 +17,9 @@ class AddCardToDeck extends React.Component {
   }
   
   submit = () => {
-    console.log('submit');
+    //this.props.boundAddCardToDeck();
+    console.log('testing submit');
+    alert('testing submit');
   }
 
   render() {
@@ -67,4 +70,21 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddCardToDeck;
+
+/*
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    boundAddCardToDeck: (post_id) => {
+      //console.log('deleting post:', post_id);
+      dispatch(addCardToDeck({post_id, view: ownProps.view}));
+       //if(ownProps.view==='full') {
+       // ownProps.history.push('/');
+       //}
+      //dispatch(test('id-101'));
+    },
+  }
+};
+*/
+
+export default connect(null,null)(AddCardToDeck);
+//export default AddCardToDeck;
