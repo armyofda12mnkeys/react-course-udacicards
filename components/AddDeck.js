@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { submitNewDeckToAsyncStorage } from '../utils/api';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { addDeck } from '../actions/actions';
 
 class AddDeck extends React.Component {

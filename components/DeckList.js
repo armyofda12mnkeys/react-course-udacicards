@@ -17,7 +17,7 @@ class DeckList extends React.Component {
 
   componentDidMount(){
     //let x;
-    fetchDecksFromAsyncStorage()
+    fetchDecksFromAsyncStorage() //, maybe convert to thunk action
     .then((decks) => {
       console.log('decks1', typeof decks);
       console.log('decks2', decks);
@@ -58,7 +58,9 @@ class DeckList extends React.Component {
     }
 
     const decks = this.props.decks;
-
+    //const {navigate} = this.props.navigation; onPress={() => navigate('Profile', {name: 'Brent'})}
+    //or pass to child if not direct navigation: navigation={this.props.navigation}
+    
     return (
       <View>
         <Text>DeckList</Text>
@@ -67,7 +69,7 @@ class DeckList extends React.Component {
         <Text>y{this.props.decks.length}y</Text>
         <FlatList
           data={decks}
-          renderItem={({item}) => <DeckItem db_key={item.db_key} title={item.title} numCards={item.questions.length} />}
+          renderItem={({item}) => <DeckItem db_key={item.db_key} title={item.title} numCards={item.questions.length} navigation={this.props.navigation} />}
         />
       </View>
     );

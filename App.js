@@ -75,17 +75,21 @@ const MainNavigator = StackNavigator({
   },
   DeckInfo: { 
     screen: DeckInfo,
+    /*
     navigationOptions: {
       header: null
       //title: 'Home',
     }
+    */
   },
   AddCardToDeck: {    
     screen: AddCardToDeck,
+    /*
     navigationOptions: {
       header: null
       //title: 'Home',
     }
+    */
   },
   Quiz: {
     screen: Quiz,
