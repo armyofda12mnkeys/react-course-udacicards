@@ -5,26 +5,27 @@ import { NavigationActions } from 'react-navigation';
 class DeckItem extends React.Component {
 //export default function DeckItem ({db_key, title, numCards}) {
   
-  toDeckInfo = (db_key) => {
+  gotoDeckInfo = (db_key) => {
     //*
     this.props.navigation.dispatch(NavigationActions.navigate({ 
       routeName: 'DeckInfo', 
       params: {db_key}
     }))
     //*/
-    console.log('props2', this.props);
+    //console.log('props2', this.props);
   }
   
   render() {
-    console.log('props', this.props);
+    const db_key = this.props.db_key;
+    //console.log('props', this.props);
     
     return (
-      <View style={{flex:1}}>
-        <TouchableOpacity onPress={() => this.toDeckInfo(this.props.db_key)} style={styles.submitBtn}>
-          <Text style={{fontSize: 14, color: 'white'}}>View Deck Info: {this.props.db_key}</Text>
+      <View style={[styles.deck, {flex:1}]}>
+        <TouchableOpacity onPress={() => this.gotoDeckInfo(db_key)} style={styles.submitBtn}>
+          <Text style={{fontSize: 14, color: 'white'}}>View Deck: {this.props.db_key}</Text>
         </TouchableOpacity>
-        <Text style={{fontSize: 14}}>title: {this.props.title}</Text>
-        <Text style={{fontSize: 14}}># of cards: {this.props.numCards}</Text>
+        <Text style={{fontSize: 14, textAlign:'center'}}>title: {this.props.title}</Text>
+        <Text style={{fontSize: 14, textAlign:'center'}}># of cards: {this.props.numCards}</Text>
       </View>
     );
   }
@@ -33,6 +34,12 @@ class DeckItem extends React.Component {
 export default DeckItem;
 
 const styles = StyleSheet.create({
+  deck: {    
+    borderBottomWidth: 5,
+    borderBottomColor: '#CCC',
+    width: '100%',
+    padding: 20,
+  },
   submitBtn: {
       backgroundColor: 'black',
       padding: 10,
@@ -40,19 +47,8 @@ const styles = StyleSheet.create({
       paddingLeft: 30,
       paddingRight: 30,
       height: 45,
-      width: '50%',
+      //width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
     },
 });
-
-/*
-const navigateAction = NavigationActions.navigate({
-  routeName: 'Profile',
-  params: {},
-
-  // navigate can have a nested navigate action that will be run inside the child router
-  action: NavigationActions.navigate({ routeName: 'SubProfileRoute'})
-})
-this.props.navigation.dispatch(navigateAction)
-*/

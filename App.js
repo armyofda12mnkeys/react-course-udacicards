@@ -93,10 +93,12 @@ const MainNavigator = StackNavigator({
   },
   Quiz: {
     screen: Quiz,
+    /*
     navigationOptions: {
       header: null
       //title: 'Home',
     }
+    */
   },
   EmptyTest: {
     screen: EmptyTest,

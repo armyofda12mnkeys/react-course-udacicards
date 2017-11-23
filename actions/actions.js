@@ -1,8 +1,9 @@
 export const RECEIVE_DECKS = 'RECEIVE_DECKS';
 export const ADD_DECK = 'ADD_DECK';
+export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK';
+
 /*
 export const REMOVE_DECK = 'REMOVE_DECK';
-export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK';
 export const REMOVE_CARD_FROM_DECK = 'REMOVE_CARD_FROM_DECK';
 
 export const ADD_CORRECT = 'ADD_CORRECT';
@@ -25,6 +26,13 @@ export function addDeck(deck) {
   }
 }
 
+export function addCardToDeck(card, db_key) {  
+  return {
+    type: ADD_CARD_TO_DECK,
+    card, db_key
+  }
+}
+
 /*
 export function removeDeck(deck_id) {  
   return {
@@ -33,12 +41,6 @@ export function removeDeck(deck_id) {
   }
 }
 
-export function addCardToDeck(card, deck_id) {  
-  return {
-    type: ADD_CARD_TO_DECK,
-    entry,
-  }
-}
 
 export function removeCardFromDeck(card_id, deck_id) {  
   return {

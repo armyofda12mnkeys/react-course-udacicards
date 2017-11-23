@@ -62,11 +62,8 @@ class DeckList extends React.Component {
     //or pass to child if not direct navigation: navigation={this.props.navigation}
     
     return (
-      <View>
-        <Text>DeckList</Text>
-        <Text>ready: x{this.state.ready == false ? 'false' : 'true'}x</Text>
-        <Text>x{this.props.test}x</Text>
-        <Text>y{this.props.decks.length}y</Text>
+      <View style={styles.container}>
+        <Text style={{textAlign: 'center', borderBottomWidth: 5, borderBottomColor: '#CCC', width: '80%'}}>Number of decks: {this.props.decks.length}</Text>
         <FlatList
           data={decks}
           renderItem={({item}) => <DeckItem db_key={item.db_key} title={item.title} numCards={item.questions.length} navigation={this.props.navigation} />}
@@ -77,16 +74,18 @@ class DeckList extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  reset: {
-    textAlign: 'center',
-    color: '#000000',
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
 
 function mapStateToProps (state) {
   let decks = state.decks;
-  console.log('decks', decks);
+  console.log('DeckList.js decks', decks);
   
   let decks_new = [];
   for(let key in decks) {
@@ -95,29 +94,11 @@ function mapStateToProps (state) {
     let questions = value.questions;
     decks_new.push ({key: key, db_key: key, title: title, questions: questions});
   }
-  console.log('decks_new', decks_new);
-//  console.log('decks_new', decks_new[0].questions);
+  console.log('DeckList.js decks redo', decks);
   
   return {
-    test: "test1234",
     decks: decks_new //[ {deck_1: {title: 'deck 111', questions: []}} ] //
   }
 }
 
 export default connect(mapStateToProps)(DeckList);
-
-/*
-<FlatList
-  data={decks}
-  renderItem={({item}) => <DeckItem db_key={item.db_key} title={item.title} numCards={item.questions.length} />}
-/>
-
-        <FlatList
-          data={[
-            { key: 'item1', db_key: 'item1', title: 'Title #1' },
-            { key: 'item2', db_key: 'item2', title: 'Title #2' },
-            { key: 'item3', db_key: 'item3', title: 'Title #3' }
-          ]}
-          renderItem={({item}) => <DeckItem db_key={item.db_key} title={item.title} numCards={0} />}
-        />
-*/

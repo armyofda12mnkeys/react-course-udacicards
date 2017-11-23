@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
+import { submitNewCardToDeck } from '../utils/api';
+import { addCardToDeck } from '../actions/actions';
 
 //export default 
 class AddCardToDeck extends React.Component {
@@ -17,18 +20,37 @@ class AddCardToDeck extends React.Component {
   }
   
   submit = () => {
-    //this.props.boundAddCardToDeck();
-    console.log('testing submit');
-    alert('testing submit');
+    console.log('submit - add card to deck'); //alert('testing submit');
+    var db_key = this.props.db_key;
+    var card = {question: this.state.question, answer: this.state.answer};
+    //set in async
+    submitNewCardToDeck({card, db_key})
+    
+    //set in redux
+    this.props.boundAddCardToDeck(card, db_key);
+    
+    //navigate back
+    
+    this.props.navigation.dispatch(NavigationActions.back({
+      key: null //'AddCardToDeck' //not sure what this optional param does, pop off stack?
+    }));
+    //interesting, why does navigate.back not work?
+    
+    /*
+    this.props.navigation.dispatch(NavigationActions.navigate({ 
+      routeName: 'DeckInfo', 
+      params: {db_key}
+    }))
+    */
+
   }
 
   render() {
     return (
-      <View>
-        <Text>Add Card to Deck</Text>
+      <View style={styles.container}>
         <Text>Enter your Question:</Text>
         <TextInput
-          style={{borderColor: 'gray', borderWidth: 1, margin: 10, padding: 5,}}
+          style={{borderColor: 'gray', borderWidth: 1, margin: 10, padding: 5, width: '80%',}}
           onChangeText={(question) => this.setState({question})}
           value={this.state.question}
           underlineColorAndroid='transparent'
@@ -37,7 +59,7 @@ class AddCardToDeck extends React.Component {
         />
         <Text>Enter your Answer:</Text>
         <TextInput
-          style={{borderColor: 'gray', borderWidth: 1, margin: 10, padding: 5,}}
+          style={{borderColor: 'gray', borderWidth: 1, margin: 10, padding: 5, width: '80%',}}
           onChangeText={(answer) => this.setState({answer})}
           value={this.state.answer}
           underlineColorAndroid='transparent'
@@ -53,9 +75,11 @@ class AddCardToDeck extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  reset: {
-    textAlign: 'center',
-    color: '#000000',
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   submitBtn: {
       backgroundColor: 'black',
@@ -64,27 +88,38 @@ const styles = StyleSheet.create({
       paddingLeft: 30,
       paddingRight: 30,
       height: 45,
-      width: '50%',
+      //width: '50%',
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: 20,
     },
 });
 
+function mapStateToProps(state, {navigation}) {
+  const {db_key} = navigation.state.params;
 
-/*
+  const decks = state.decks;
+
+  const deck = decks[db_key]; 
+  //decks.find((deck) => { 
+  //    return deck.db_key === db_key;
+  //});
+  console.log('deck',deck);
+  
+  return {
+    db_key: db_key,
+    deck: deck //{ key: 'item1', db_key: 'item1', title: 'Title #1', questions: [] },
+  }
+}
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    boundAddCardToDeck: (post_id) => {
-      //console.log('deleting post:', post_id);
-      dispatch(addCardToDeck({post_id, view: ownProps.view}));
-       //if(ownProps.view==='full') {
-       // ownProps.history.push('/');
-       //}
-      //dispatch(test('id-101'));
+    boundAddCardToDeck: (card, db_key) => {
+      dispatch(addCardToDeck(card, db_key));
     },
   }
 };
-*/
 
-export default connect(null,null)(AddCardToDeck);
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddCardToDeck);
 //export default AddCardToDeck;

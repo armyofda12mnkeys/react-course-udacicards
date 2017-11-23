@@ -1,4 +1,5 @@
-import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, ADD_CARD_TO_DECK, REMOVE_CARD_FROM_DECK }  from '../actions/actions';
+import { RECEIVE_DECKS, ADD_DECK, ADD_CARD_TO_DECK }  from '../actions/actions';
+/* REMOVE_DECK, REMOVE_CARD_FROM_DECK */
 
 function decks(state={}, action) {
   switch(action.type) {
@@ -29,12 +30,18 @@ function decks(state={}, action) {
     */
     case ADD_CARD_TO_DECK: {
       const db_key        = action.db_key;
-      const question_card = action.card;
-      
+      const card = action.card;
+      //state[db_key].questions.push( card );
       
       return {
         ...state,
-        ...action.deck
+        [db_key]: {
+          ...state[db_key],
+          questions: [
+           ...state[db_key].questions,
+           card
+          ]
+        }        
       }
     }
     

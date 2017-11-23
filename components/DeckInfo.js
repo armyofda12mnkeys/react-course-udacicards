@@ -8,7 +8,7 @@ import { NavigationActions } from 'react-navigation';
 class DeckInfo extends React.Component {
   
   static navigationOptions = ({navigation}) => {
-    const { db_key } = navigation.state.params;    
+    const { db_key } = navigation.state.params;
     return {
       title: `Deck "${db_key}"`
     }
@@ -24,29 +24,46 @@ class DeckInfo extends React.Component {
     //*/
   }
   
+  gotoQuiz = (db_key) => {
+    //*
+    this.props.navigation.dispatch(NavigationActions.navigate({ 
+      routeName: 'Quiz', 
+      params: {db_key}
+    }))
+    //*/
+  }
+  
   render() {
     const db_key = this.props.db_key;
     const deck = this.props.deck;
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={{fontSize: 30}}>key: {db_key}</Text>      
         <Text style={{fontSize: 14}}>title: {deck.title}</Text>
         <Text style={{fontSize: 14}}># of cards: {deck.questions.length}</Text>
-        <TouchableOpacity onPress={()=>this.addCardToDeck(db_key)} style={styles.submitBtn}>
-          <Text style={{color: 'white'}}>Add Card</Text>
+        <TouchableOpacity onPress={()=>this.addCardToDeck(db_key)} style={[styles.submitBtn, {width: '75%', backgroundColor:'black'}]}>
+          <Text style={{color: 'white'}}>Create New Question</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>alert('blah')} style={styles.submitBtn}>
-          <Text style={{color: 'white'}}>Start Quiz</Text>
-        </TouchableOpacity>
+        {
+          (deck.questions.length > 0)
+          ?
+          <TouchableOpacity onPress={()=>this.gotoQuiz(db_key)} style={[styles.submitBtn, {width: '75%', backgroundColor:'red'}]}>
+            <Text style={{color: 'white'}}>Start a Quiz</Text>
+          </TouchableOpacity>
+          :
+          <Text></Text>
+        }
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  reset: {
-    textAlign: 'center',
-    color: '#000000',
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   submitBtn: {
       backgroundColor: 'black',
@@ -58,6 +75,7 @@ const styles = StyleSheet.create({
       width: '50%',
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: 20,
     },
 });
 
@@ -67,7 +85,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, {navigation}) {
   const {db_key} = navigation.state.params;
-  console.log('db_key',db_key);
+  console.log('Deckinfo db_key',db_key);
   
   const decks = state.decks;
 
@@ -75,7 +93,7 @@ function mapStateToProps(state, {navigation}) {
   /*decks.find((deck) => { 
       return deck.db_key === db_key;
   });*/
-  console.log('deck',deck);
+  console.log('Deckinfo deck',deck);
   
   return {
     db_key: db_key,

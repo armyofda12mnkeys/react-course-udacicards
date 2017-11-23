@@ -35,6 +35,11 @@ export function removeDeckFromAsyncStorage(key) {
 }
 
 
-export function addCardToDeck({card, deck}) {
-
+export function submitNewCardToDeck({card, db_key}) {
+  return AsyncStorage.getItem(STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      data[db_key].questions.push( card );      
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    })
 }
