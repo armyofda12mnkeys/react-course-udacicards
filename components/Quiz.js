@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import { clearLocalNotification, setLocalNotification } from '../utils/_helpers';
+import { clearLocalNotification, setLocalNotification } from '../utils/api';
 
 //export default 
 class Quiz extends React.Component {

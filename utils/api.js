@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { DECKS_STORAGE_KEY, NOTIFICATIONS_STORAGE_KEY } from './_helpers';
-import { Notifications, Permission } from 'expo';
+import { Notifications, Permissions } from 'expo';
 
 
 export function fetchDecksFromAsyncStorage() {
@@ -52,6 +52,7 @@ export function submitNewCardToDeck({card, db_key}) {
 
 
 export function clearLocalNotification() {
+  console.log('clearLocalNotification');
   return AsyncStorage.removeItem(NOTIFICATIONS_STORAGE_KEY)
   .then(Notifications.cancelAllScheduledNotificationsAsync);
 }
@@ -82,7 +83,7 @@ export function setLocalNotification() {
           Notifications.cancelAllScheduledNotificationsAsync();
           let tomorrow = new Date();
           tomorrow.setDate( tomorrow.getDate() + 1 );
-          tomorrow.setHours(20);
+          tomorrow.setHours(8);
           tomorrow.setMinutes(0);
           
           Notifications.scheduleLocalNotificationAsync(
