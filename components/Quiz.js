@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import { NavigationActions } from 'react-navigation';
+import { clearLocalNotification, setLocalNotification } from '../utils/_helpers';
 
 //export default 
 class Quiz extends React.Component {
@@ -41,6 +42,8 @@ class Quiz extends React.Component {
     if(current_question_index+1 < this.props.deck.questions.length) {
       this.setState({view_mode: 'quiz_question', quiz_question_index: current_question_index+1});//do i need prev state???
     } else {
+      clearLocalNotification()
+        .then(setLocalNotification);
       this.setState({view_mode: 'quiz_results'});
     }
     

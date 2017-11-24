@@ -6,7 +6,7 @@ import AddDeck from './components/AddDeck';
 import DeckInfo from './components/DeckInfo';
 import AddCardToDeck from './components/AddCardToDeck';
 import Quiz from './components/Quiz';
-import EmptyTest from './components/test/EmptyTest';
+import { setLocalNotification } from './utils/api';
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo';
@@ -99,18 +99,14 @@ const MainNavigator = StackNavigator({
       //title: 'Home',
     }
     */
-  },
-  EmptyTest: {
-    screen: EmptyTest,
-    navigationOptions: {
-      //header: null
-      title: 'TEST',
-    }
-  },
+  }, 
 });
 
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={store}>
@@ -133,12 +129,6 @@ const styles = StyleSheet.create({
 });
 
 //export default connect()(App);
-
-
-/*
-<Text>Shake your phone to open the developer menu.</Text>
-*/
-
 
 
 
